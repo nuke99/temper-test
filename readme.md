@@ -1,5 +1,8 @@
 # Laravel Test
 
+![Screenshot](graph.png)
+
+
 
 
 ### Installing
