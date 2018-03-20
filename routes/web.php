@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
@@ -17,12 +18,12 @@ Route::get('/', function () {
 });
 
 
-Route::get('/dashboard/weekly-cohorts','DashboardController@weeklyCohorts')->middleware('jwt');
+Route::get('/dashboard/weekly-cohorts', 'DashboardController@weeklyCohorts')->middleware('jwt');
 
 
-Route::get('/auth/refresh', function(Request $request) {
+Route::get('/auth/refresh', function (Request $request) {
     return $request;
 })->middleware('jwt.refresh');
 Route::get('/auth/user', 'AdminController@user')->middleware('jwt.refresh');
-Route::post('/auth/login','AdminController@login');
+Route::post('/auth/login', 'AdminController@login');
 

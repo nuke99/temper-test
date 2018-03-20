@@ -3,8 +3,7 @@
 ![Screenshot](graph.png)
 
 
-
-
+**PSR-2 Coding Style Followed**
 ### Installing
 
 Please follow the following steps to install and test the application
@@ -71,6 +70,11 @@ DEFAULT_ADMIN_PASSWORD= S3cr3tP4ssw0rd
 
 
 ## Running the tests
+
+Create a test db and edit the file phpunit.xml and place a test db name
+```
+ <env name="DB_DATABASE" value="testdb"/>
+```
 
 You can execute the tests with 
 ```
