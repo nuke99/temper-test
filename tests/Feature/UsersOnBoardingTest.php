@@ -23,7 +23,7 @@ class UsersOnBoardingTest extends TestCase
     }
 
     /**
-     * Create Single user to check writable permissions
+     * UsersOnBoarding create test
      */
     public function testCreateOnBoardingSteps()
     {
@@ -45,6 +45,7 @@ class UsersOnBoardingTest extends TestCase
         ]);
 
         $attributes = $this->model->getWeekGroups()->first()->getAttributes();
+
         $this->assertEquals(2, sizeof($attributes));
         $this->assertArrayHasKey('week_of_year', $attributes);
         $this->assertArrayHasKey('user_count', $attributes);
