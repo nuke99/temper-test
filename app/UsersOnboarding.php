@@ -31,15 +31,13 @@ class UsersOnboarding extends Model
 
     public function getWeekGroups()
     {
-
         return $this->select(
             DB::raw("WEEK(created_at) as week_of_year"),
             DB::raw("count(user_id) as user_count")
         )->groupByWeek()->get();
-
     }
 
-    public function getWeeklyStepProcess($week, $step)
+    public function getWeeklyStepProcessCount($week, $step)
     {
         return $this->stepOfRegistrationStoppedAt($step)
             ->inTheWeekOfYear($week)
@@ -53,20 +51,16 @@ class UsersOnboarding extends Model
      */
     public function weeklyCohorts()
     {
-
         $data = [];
         foreach ($this->getWeekGroups() as $key => $column) {
             $_weeklyData = [];
             $_weeklyData['name'] = $column->week_of_year . " Week ";
             foreach ([20, 40, 50, 70, 90, 99, 100] as $step) {
-                $_weeklyData['data'][] = round(($this->getWeeklyStepProcess($column->week_of_year,
+                $_weeklyData['data'][] = round(($this->getWeeklyStepProcessCount($column->week_of_year,
                             $step) / $column->user_count) * 100, 2);
             }
             $data[] = $_weeklyData;
         }
-
         return $data;
     }
-
-
 }

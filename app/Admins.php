@@ -33,5 +33,4 @@ class Admins extends Authenticatable implements JWTSubject
     {
         return [];
     }
-
 }
