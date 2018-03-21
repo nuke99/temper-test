@@ -2,12 +2,15 @@
 
 namespace Tests\Feature;
 
+use App\Admins;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TemperAPITest extends TestCase
 {
+
+    use RefreshDatabase;
     /**
      * A basic test example.
      *
@@ -16,13 +19,11 @@ class TemperAPITest extends TestCase
 
     private $_token = '';
 
-    public function testExample()
-    {
-        $this->assertTrue(true);
-    }
 
     private function _authenticate()
     {
+        factory(Admins::class)->create();
+
         $response = $this->postJson('/auth/login', [
             'email' => env('DEFAULT_ADMIN_EMAIL'),
             'password' => env('DEFAULT_ADMIN_PASSWORD')
@@ -40,6 +41,7 @@ class TemperAPITest extends TestCase
     public function testJWTAuthRequest()
     {
         $response = $this->_authenticate();
+
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'status',
@@ -56,14 +58,11 @@ class TemperAPITest extends TestCase
         $this->_authenticate();
         $this->withHeader('Authorization', $this->_token);
 
-        $response = $this->getJson('/dashboard/weekly-cohorts');
-
-        $response->assertStatus(200)
-            // Status should be always true
+        $this->getJson('/dashboard/weekly-cohorts')
+            ->assertStatus(200)
             ->assertJson([
                 'status' => true
             ])
-            // Should have the below structure
             ->assertJsonStructure([
                 'status',
                 'data' => [
@@ -73,6 +72,5 @@ class TemperAPITest extends TestCase
                     ]
                 ]
             ]);
-
     }
 }
